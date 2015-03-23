@@ -6,9 +6,9 @@
     <authors>@authors@</authors>
     <owners>@authors@</owners>
     <summary>@summary@</summary>
-    <licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/octokit/octokit.net</projectUrl>
-    <iconUrl>https://github.com/octokit/octokit.net/icon.png</iconUrl>
+    <licenseUrl>https://github.com/climax-media/climax-web-http/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/climax-media/climax-web-http</projectUrl>
+    <iconUrl>https://avatars1.githubusercontent.com/u/4292694?v=3&s=200</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>@description@</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
