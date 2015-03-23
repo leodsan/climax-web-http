@@ -128,49 +128,49 @@ You don't have to do anything else - as long as Web API dependency injection is 
  
  You can set up two versions of same resource:
  
-    public class NewValuesController : ApiController
-    {
-        [VersionedRoute("values", Version = 2)]
-        public string Get()
-        {
-            return "i'm new";
-        }
-    }
+       public class NewValuesController : ApiController
+       {
+           [VersionedRoute("values", Version = 2)]
+           public string Get()
+           {
+               return "i'm new";
+           }
+       }
 
-    public class OldValuesController : ApiController
-    {
-        [VersionedRoute("values", Version = 1)]
-        public string Get()
-        {
-            return "i'm old";
+       public class OldValuesController : ApiController
+       {
+           [VersionedRoute("values", Version = 1)]
+           public string Get()
+           {
+               return "i'm old";
+           }
         }
-    }
  
  For URI versioning, simply use the route template i.e.:
  
-    [VersionedRoute("v2/values", Version = 2)]
+        [VersionedRoute("v2/values", Version = 2)]
  
  If you want header versioning, you need to set up the versioning first:
     
-    config.ConfigureVersioning(versioningHeaderName: "version", vesioningMediaTypes: null);
+        config.ConfigureVersioning(versioningHeaderName: "version", vesioningMediaTypes: null);
 
  The following HTTP request gives you the new resource:
  
-    GET /values
-    version: 2
+        GET /values
+        version: 2
     
  If you want media type versioning you also need to set it up:
  
-    config.ConfigureVersioning(versioningHeaderName: null, vesioningMediaTypes: new [] { "application/vnd.climax"});
+        config.ConfigureVersioning(versioningHeaderName: null, vesioningMediaTypes: new [] { "application/vnd.climax"});
  
  The following HTTP request gives you the new resource (version delimited by `-v` and `+`):
  
-    GET /values
-    Accept: application/vnd.climax-v2+json
+        GET /values
+        Accept: application/vnd.climax-v2+json
 
  You can also implement your own `IVersionParser` and plug it in (or inherit the base `VersionParser`) if you want full control over header parsing.
  
-    config.ConfigureVersioning(new MyVersionParser());
+       config.ConfigureVersioning(new MyVersionParser());
  
 ### Action Results
  
