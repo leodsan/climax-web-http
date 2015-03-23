@@ -8,17 +8,17 @@ A set of add ons and extensions for ASP.NET Web API.
 
  - `ThreadCultureMessageHandler` - ensures culture is set (` Thread.CurrentThread.CurrentCulture` and `Thread.CurrentThread.CurrentUICulture`. Parsed from `Accept-Language` header or `AcceptLanguage` querystring
  
-     config.MessageHandlers.Add(new ThreadCultureMessageHandler(setThreadCulture: true, setThreadUiCulture: true,  fallBackCulture: new CultureInfo("en-US")));
+        config.MessageHandlers.Add(new ThreadCultureMessageHandler(setThreadCulture: true, setThreadUiCulture: true,  fallBackCulture: new CultureInfo("en-US")));
  
  - `HeadMessageHandler` - adds support for HEAD HTTP verb
  
-    config.MessageHandlers.Add(new HeadMessageHandler());
+        config.MessageHandlers.Add(new HeadMessageHandler());
  
 ### Services
 
  - `NonControllerHttpControllerTypeResolver` - allows you to use API controllers without "Controller" suffix
  
-    config.Services.Replace(typeof(IHttpControllerTypeResolver), new NonControllerHttpControllerTypeResolver());
+        config.Services.Replace(typeof(IHttpControllerTypeResolver), new NonControllerHttpControllerTypeResolver());
  
  - `PerControllerConfigActivator` - supports HttpConfiguration per controller that can be set up at runtime. Normally Web API only allows static per controller configuration
  
@@ -31,25 +31,25 @@ A set of add ons and extensions for ASP.NET Web API.
  
  - `SmartHttpActionInvoker` - saves the information of the action return type under `RuntimeReturnType` key of request properties. Web API normally only exposes the type information from the action descriptor.
  
-    config.Services.Replace(typeof(IHttpActionInvoker), new SmartHttpActionInvoker());
-    //then anywhere:
-    config.Get<Type>("RuntimeReturnType");
+        config.Services.Replace(typeof(IHttpActionInvoker), new SmartHttpActionInvoker());
+        //then anywhere:
+         config.Get<Type>("RuntimeReturnType");
  
  - `JsonContentNegotiator` - switch off content negotiation in your API completely - support JSON only, in the most efficient way
  
-    config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
+        config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
  
  - `RouteDataValuesOnlyAttribute` - disables binding of simple parameters from querystring (only from route data). Applied at controller level.
  
-    [RouteDataValuesOnly]
-    public class TestController : ApiController
-    {
-        //foo will only be bound from route data not from querystring
-        public string Get(string foo)
+        [RouteDataValuesOnly]
+        public class TestController : ApiController
         {
-            return foo;
+           //foo will only be bound from route data not from querystring
+           public string Get(string foo)
+           {
+               return foo;
+           }
         }
-    }
  
  - `InjectParameterBinding` - allows you to inject your dependencies (services and such, that are resolved from Web API dependency resolver) directly into actions, rather than through constructor
 
