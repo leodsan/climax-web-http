@@ -68,7 +68,7 @@ namespace Climax.Web.Http.Extensions
         public static void ConfigureDefaultVersioning(this HttpConfiguration configuration)
         {
             var parser = new VersionParser();
-            configuration.Properties[typeof(VersionParser)] = parser;
+            configuration.Properties[typeof(IVersionParser)] = parser;
         }
 
         /// <summary>
@@ -80,7 +80,12 @@ namespace Climax.Web.Http.Extensions
         public static void ConfigureVersioning(this HttpConfiguration configuration, string versioningHeaderName, string[] vesioningMediaTypes)
         {
             var parser = new VersionParser(versioningHeaderName, vesioningMediaTypes);
-            configuration.Properties[typeof (VersionParser)] = parser;
+            configuration.Properties[typeof(IVersionParser)] = parser;
+        }
+
+        public static void ConfigureVersioning(this HttpConfiguration configuration, IVersionParser parser)
+        {
+            configuration.Properties[typeof(IVersionParser)] = parser;
         }
     }
 }

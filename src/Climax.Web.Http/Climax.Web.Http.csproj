@@ -77,6 +77,7 @@
     <Compile Include="Services\RouteDataValuesOnlyAttribute.cs" />
     <Compile Include="Services\PerControllerConfigActivator.cs" />
     <Compile Include="Services\SmartHttpActionInvoker.cs" />
+    <Compile Include="Services\Versioning\IVersionParser.cs" />
     <Compile Include="Services\Versioning\VersionedRouteAttribute.cs" />
     <Compile Include="Services\Versioning\VersionConstraint.cs" />
     <Compile Include="Services\Versioning\VersionParser.cs" />

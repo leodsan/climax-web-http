@@ -19,7 +19,7 @@ namespace Climax.Web.Http.Services.Versioning
         public bool Match(HttpRequestMessage request, IHttpRoute route, string parameterName,
             IDictionary<string, object> values, HttpRouteDirection routeDirection)
         {
-            var versionParser = request.GetConfiguration().Get<VersionParser>();
+            var versionParser = request.GetConfiguration().Get<IVersionParser>();
             if (versionParser == null)
             {
                 throw new InvalidOperationException("You need to call ConfigureVersioning method against the HttpConfiguration first");

@@ -167,7 +167,10 @@ You don't have to do anything else - as long as Web API dependency injection is 
  
     GET /values
     Accept: application/vnd.climax-v2+json
-    
+
+ You can also implement your own `IVersionParser` and plug it in (or inherit the base `VersionParser`) if you want full control over header parsing.
+ 
+    config.ConfigureVersioning(new MyVersionParser());
  
 ### Action Results
  

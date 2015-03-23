@@ -4,7 +4,7 @@ using Climax.Web.Http.Extensions;
 
 namespace Climax.Web.Http.Services.Versioning
 {
-    public class VersionParser
+    public class VersionParser : IVersionParser
     {
         private readonly string _apiVersionHeader;
         private readonly string[] _mediaTypes;
@@ -19,7 +19,7 @@ namespace Climax.Web.Http.Services.Versioning
             _mediaTypes = mediaTypes;
         }
 
-        private bool NeedsAcceptVersioning(HttpRequestMessage request, out string version)
+        protected virtual bool NeedsAcceptVersioning(HttpRequestMessage request, out string version)
         {
             if (_mediaTypes != null && _mediaTypes.Any() && request.Headers.Accept.Any())
             {
@@ -38,7 +38,7 @@ namespace Climax.Web.Http.Services.Versioning
             return false;
         }
 
-        private bool NeedsHeaderVersioning(HttpRequestMessage request, out string version)
+        protected virtual bool NeedsHeaderVersioning(HttpRequestMessage request, out string version)
         {
             if (!string.IsNullOrWhiteSpace(_apiVersionHeader) && request.Headers.Contains(_apiVersionHeader))
             {
