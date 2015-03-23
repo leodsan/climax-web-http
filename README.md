@@ -20,14 +20,33 @@ A set of add ons and extensions for ASP.NET Web API.
  
         config.Services.Replace(typeof(IHttpControllerTypeResolver), new NonControllerHttpControllerTypeResolver());
  
+    You can now do i.e.:
+    
+        public class CustomerResource : ApiController
+        {
+            [Route("customer")]
+            public string Get()
+            {
+                return "customer";
+            }
+        }
+    
+    And reach this resource via `/customer` route or centrally - `/api/customerresource`.
+    Note - this means that the `Controller` is no longer stripped. So if you have `FooController`, the centralized routing mechanism will see it as `/api/foocontroller`.
+ 
  - `PerControllerConfigActivator` - supports HttpConfiguration per controller that can be set up at runtime. Normally Web API only allows static per controller configuration
  
-        config.AddControllerConfigurationMap(new Dictionary<Type, Action<HttpControllerSettings>>{ {typeof(TestController), settings =>
-        {
-            settings.Formatters.Clear();
-            settings.Formatters.Add(new JsonMediaTypeFormatter());                    
-        }});
-        config.Services.Replace(typeof(IHttpControllerActivator), new PerControllerConfigActivator());
+            config.AddControllerConfigurationMap(new Dictionary<Type, Action<HttpControllerSettings>>
+            {
+                {
+                    typeof (ValuesController), settings =>
+                    {
+                        settings.Formatters.Clear();
+                        settings.Formatters.Add(new JsonMediaTypeFormatter());
+                    }
+                }
+            });
+            config.Services.Replace(typeof(IHttpControllerActivator), new PerControllerConfigActivator());
  
  - `SmartHttpActionInvoker` - saves the information of the action return type under `RuntimeReturnType` key of request properties. Web API normally only exposes the type information from the action descriptor.
  
