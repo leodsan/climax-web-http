@@ -2,7 +2,11 @@
 
 A set of add ons and extensions for ASP.NET Web API.
 
-## Getting started
+## Nuget
+
+    install-package climax.web.http
+
+## Build
 
     git clone https://github.com/climax-media/climax-web-http.git
     cd climax-web-http
