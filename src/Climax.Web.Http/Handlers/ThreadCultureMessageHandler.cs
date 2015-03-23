@@ -11,16 +11,17 @@ namespace Climax.Web.Http.Handlers
 {
     public class ThreadCultureMessageHandler : DelegatingHandler
     {
-        private static readonly CultureInfo LastResortFallback = new CultureInfo("en-CA");
+        private readonly CultureInfo _lastResortFallback;
         private readonly bool _setThreadCulture;
         private readonly bool _setThreadUiCulture;
 
-        public ThreadCultureMessageHandler() : this(true, true) {}
+        public ThreadCultureMessageHandler(CultureInfo fallBackCulture) : this(true, true, fallBackCulture) {}
 
-        public ThreadCultureMessageHandler(bool setThreadCulture, bool setThreadUiCulture)
+        public ThreadCultureMessageHandler(bool setThreadCulture, bool setThreadUiCulture, CultureInfo fallBackCulture)
         {
             _setThreadCulture = setThreadCulture;
             _setThreadUiCulture = setThreadUiCulture;
+            _lastResortFallback = fallBackCulture ?? new CultureInfo("en-CA");
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, 
@@ -70,11 +71,11 @@ namespace Climax.Web.Http.Handlers
 
             if (_setThreadCulture)
             {
-                Thread.CurrentThread.CurrentCulture = culture ?? LastResortFallback;
+                Thread.CurrentThread.CurrentCulture = culture ?? _lastResortFallback;
             }
             if (_setThreadUiCulture)
             {
-                Thread.CurrentThread.CurrentUICulture = uiCulture ?? LastResortFallback;
+                Thread.CurrentThread.CurrentUICulture = uiCulture ?? _lastResortFallback;
             }
 
             return base.SendAsync(request, cancellationToken);

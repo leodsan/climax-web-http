@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Climax.Web.Http.Handlers
 {
-    public class HeadHandler : DelegatingHandler
+    public class HeadMessageHandler : DelegatingHandler
     {
         private const string Head = "IsHead";
 

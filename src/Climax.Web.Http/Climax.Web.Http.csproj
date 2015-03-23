@@ -63,7 +63,7 @@
     <Compile Include="FallbackHeaderConstants.cs" />
     <Compile Include="Filters\CheckModelStateAttribute.cs" />
     <Compile Include="Filters\ModelNullCheckType.cs" />
-    <Compile Include="Handlers\HeadHandler.cs" />
+    <Compile Include="Handlers\HeadMessageHandler.cs" />
     <Compile Include="Handlers\ThreadCultureMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\FileHttpActionResult.cs" />
