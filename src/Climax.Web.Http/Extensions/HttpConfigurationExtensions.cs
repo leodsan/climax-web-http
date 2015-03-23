@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using Climax.Web.Http.Services;
+using Climax.Web.Http.Services.Versioning;
 
 namespace Climax.Web.Http.Extensions
 {
@@ -62,6 +63,12 @@ namespace Climax.Web.Http.Extensions
         {
             var map = configuration.Properties["controllerConfigMap"];
             return map as Dictionary<Type, Action<HttpControllerSettings>>;
+        }
+
+        public static void ConfigureVersioning(string versioningHeaderName, string[] vesioningMediaTypes)
+        {
+            VersionFinder.ApiVersion = versioningHeaderName;
+            VersionFinder.AcceptMediaTypes = vesioningMediaTypes;
         }
     }
 }

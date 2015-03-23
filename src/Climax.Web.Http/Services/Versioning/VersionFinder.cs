@@ -6,14 +6,15 @@ namespace Climax.Web.Http.Services.Versioning
 {
     public class VersionFinder
     {
-        private static readonly string ApiVersion = "ApiVersion";
+        internal static string ApiVersion = "ApiVersion";
+        internal static string[] AcceptMediaTypes = new [] {MediaTypes.Climax};
 
         private static bool NeedsAcceptVersioning(HttpRequestMessage request, out string version)
         {
             if (request.Headers.Accept.Any())
             {
                 var acceptHeaderVersion =
-                    request.Headers.Accept.FirstOrDefault(x => x.MediaType.ToLowerInvariant().Contains(MediaTypes.Climax));
+                    request.Headers.Accept.FirstOrDefault(x => AcceptMediaTypes.Any(a => x.MediaType.ToLowerInvariant().Contains(a)));
 
                 if (acceptHeaderVersion != null && acceptHeaderVersion.MediaType.Contains("-v") &&
                     acceptHeaderVersion.MediaType.Contains("+"))
