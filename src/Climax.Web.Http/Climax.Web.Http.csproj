@@ -79,7 +79,7 @@
     <Compile Include="Services\SmartHttpActionInvoker.cs" />
     <Compile Include="Services\Versioning\VersionedRouteAttribute.cs" />
     <Compile Include="Services\Versioning\VersionConstraint.cs" />
-    <Compile Include="Services\Versioning\VersionFinder.cs" />
+    <Compile Include="Services\Versioning\VersionParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

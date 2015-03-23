@@ -65,10 +65,22 @@ namespace Climax.Web.Http.Extensions
             return map as Dictionary<Type, Action<HttpControllerSettings>>;
         }
 
-        public static void ConfigureVersioning(string versioningHeaderName, string[] vesioningMediaTypes)
+        public static void ConfigureDefaultVersioning(this HttpConfiguration configuration)
         {
-            VersionFinder.ApiVersion = versioningHeaderName;
-            VersionFinder.AcceptMediaTypes = vesioningMediaTypes;
+            var parser = new VersionParser();
+            configuration.Properties[typeof(VersionParser)] = parser;
+        }
+
+        /// <summary>
+        /// Configure versioning - header and media types. Pass null to ignore a given versioning mechanism.
+        /// </summary>
+        /// <param name="configuration"> HTTP configuration</param>
+        /// <param name="versioningHeaderName"> Name of header used for versioning</param>
+        /// <param name="vesioningMediaTypes"> Collection of media types subject to versioning. You just register the base here i.e. "application/vnd.climax". Then in the HTTP requests, the required Accept header format is to delimit version number with "-v" and then "+", i.e. application/vnd.climax-v2+json or application/vnd.climax-v3+xml.</param>
+        public static void ConfigureVersioning(this HttpConfiguration configuration, string versioningHeaderName, string[] vesioningMediaTypes)
+        {
+            var parser = new VersionParser(versioningHeaderName, vesioningMediaTypes);
+            configuration.Properties[typeof (VersionParser)] = parser;
         }
     }
 }

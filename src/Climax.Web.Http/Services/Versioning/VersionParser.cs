@@ -4,17 +4,27 @@ using Climax.Web.Http.Extensions;
 
 namespace Climax.Web.Http.Services.Versioning
 {
-    public class VersionFinder
+    public class VersionParser
     {
-        internal static string ApiVersion = "ApiVersion";
-        internal static string[] AcceptMediaTypes = new [] {MediaTypes.Climax};
+        private readonly string _apiVersionHeader;
+        private readonly string[] _mediaTypes;
 
-        private static bool NeedsAcceptVersioning(HttpRequestMessage request, out string version)
+        public VersionParser() : this("ApiVersion",  new [] {MediaTypes.Climax})
         {
-            if (request.Headers.Accept.Any())
+        }
+
+        public VersionParser(string apiVersionHeader, string[] mediaTypes)
+        {
+            _apiVersionHeader = apiVersionHeader;
+            _mediaTypes = mediaTypes;
+        }
+
+        private bool NeedsAcceptVersioning(HttpRequestMessage request, out string version)
+        {
+            if (_mediaTypes != null && _mediaTypes.Any() && request.Headers.Accept.Any())
             {
                 var acceptHeaderVersion =
-                    request.Headers.Accept.FirstOrDefault(x => AcceptMediaTypes.Any(a => x.MediaType.ToLowerInvariant().Contains(a)));
+                    request.Headers.Accept.FirstOrDefault(x => _mediaTypes.Any(a => x.MediaType.ToLowerInvariant().Contains(a)));
 
                 if (acceptHeaderVersion != null && acceptHeaderVersion.MediaType.Contains("-v") &&
                     acceptHeaderVersion.MediaType.Contains("+"))
@@ -28,11 +38,11 @@ namespace Climax.Web.Http.Services.Versioning
             return false;
         }
 
-        private static bool NeedsHeaderVersioning(HttpRequestMessage request, out string version)
+        private bool NeedsHeaderVersioning(HttpRequestMessage request, out string version)
         {
-            if (request.Headers.Contains(ApiVersion))
+            if (!string.IsNullOrWhiteSpace(_apiVersionHeader) && request.Headers.Contains(_apiVersionHeader))
             {
-                version = request.Headers.GetValues(ApiVersion).FirstOrDefault();
+                version = request.Headers.GetValues(_apiVersionHeader).FirstOrDefault();
                 if (version != null)
                 {
                     return true;
@@ -52,7 +62,7 @@ namespace Climax.Web.Http.Services.Versioning
             return version;
         }
 
-        public int GetVersionFromRequest(HttpRequestMessage request)
+        public virtual int GetVersionFromRequest(HttpRequestMessage request)
         {
             string version;
             if (NeedsAcceptVersioning(request, out version))
