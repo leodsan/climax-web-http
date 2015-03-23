@@ -13,7 +13,7 @@ let summary = "A collection of add-ons for ASP.NET Web API"
 let description = """
   A collection of add-ons for ASP.NET Web API."""
 // List of author names (for NuGet package)
-let authors = [ "filipw" ]
+let authors = [ "filipw"; "climax-media" ]
 let tags = "webapi climax aspnet aspnetwebapi"
 let solutionFile = "Climax.Web.Http.sln"
 let outputDir = "bin"
